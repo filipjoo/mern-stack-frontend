@@ -1,5 +1,5 @@
 // cssを読み込む
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 
 export const Login = () => {
@@ -9,7 +9,7 @@ export const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:4000/user/login", {
+            const response = await fetch("https://mern-stack-backend-79bu.onrender.com/user/login", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -21,6 +21,7 @@ export const Login = () => {
                 }),
             })
             const jsonResponse = await response.json();
+            console.log(jsonResponse);
             localStorage.setItem("token", jsonResponse.token);
             alert(jsonResponse.message);
         }
@@ -29,12 +30,16 @@ export const Login = () => {
             console.log(error);
         }
     }
+    useEffect(() => {
+        document.title = "ログインページ";
+    }, []);
+
 
 
 
     return (
         <div>
-            <h1>ログイン</h1>
+            <h1 className="page-title">ログイン</h1>
             <form onSubmit={handleSubmit}>
                 <input value={email} onChange={(e) => {
                     setemail(e.target.value)

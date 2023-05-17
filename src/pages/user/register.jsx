@@ -1,15 +1,16 @@
 // cssを読み込む
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
-export const Register = () => {
-    const [name, setName] = useState("初期データ");
-    const [email, setemail] = useState("初期データ");
-    const [password, setpassword] = useState("初期データ");
+
+export const Register = () => {    
+    const [name, setName] = useState("");
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
 
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:4000/user/register", {
+            const response = await fetch("https://mern-stack-backend-79bu.onrender.com/user/register", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -33,10 +34,14 @@ export const Register = () => {
             console.log(error);
         }
     }
+    useEffect(() => {
+        document.title = "ユーザ登録ページ";
+    }, []);
+
 
     return (
         <div>
-            <h1>ユーザ登録ページ</h1>
+            <h1 className="page-title">ユーザ登録ページ</h1>
             {/* ユーザ登録form作成。要素は、名前(name)、メールアドレス(email)、パスワード(password) */}
             <form onSubmit={handleSubmit}>
                 <div>
